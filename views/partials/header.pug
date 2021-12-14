@@ -10,3 +10,13 @@
       ul.nav.navbar-nav
         li.nav-item(class=(title === 'Inicio') ? 'active' : undefined)
           a.nav-link(href='/') Inicio
+      ul.nav.navbar-nav.ml-auto
+        if !user
+          li.nav-item(class=(title === 'Iniciar sesión') ? 'active' : undefined)
+            a.nav-link(href='/iniciar-sesion') Iniciar sesión
+        else
+          li.dropdown.nav-item
+            a.dropdown-toggle.nav-link(href='#', data-toggle='dropdown')
+              span= user.username
+            div.dropdown-menu
+              a.dropdown-item(href='/cerrar-sesion') Cerrar sesión
