@@ -12,6 +12,22 @@ const userSchema = new mongoose.Schema({
 });
 
 /**
+ * Password hash middleware.
+ */
+userSchema.pre('save', function save(next) {
+  const user = this;
+  if (!user.isModified('password')) { return next(); }
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) return next(err);
+    bcrypt.hash(user.password, salt, (err, hash) => {
+      if (err) return next(err);
+      user.password = hash;
+      next();
+    });
+  });
+});
+
+/**
  * Verificar la contraseña de un usuario.
  */
  userSchema.methods.verifyPassword = function verifyPassword(candidatePassword, cb) {

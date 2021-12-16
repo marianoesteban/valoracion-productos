@@ -76,6 +76,8 @@ app.get('/', homeController.index);
 app.get('/iniciar-sesion', userController.getLogin);
 app.post('/iniciar-sesion', userController.postLogin);
 app.get('/cerrar-sesion', userController.logout);
+app.get('/registro', userController.getSignup);
+app.post('/registro', userController.postSignup);
 
 /**
  * Iniciar el servidor de Express.

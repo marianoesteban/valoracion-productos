@@ -1,5 +1,6 @@
 const passport = require('passport');
 const validator = require('validator');
+const User = require('../models/User');
 
 /**
  * GET /iniciar-sesion
@@ -45,4 +46,58 @@ exports.postLogin = (req, res, next) => {
 exports.logout = (req, res) => {
   req.logout();
   res.redirect('/');
+};
+
+/**
+ * GET /registro
+ * Página de registro de usuarios.
+ */
+exports.getSignup = (req, res) => {
+  if (req.user) {
+    res.redirect('/');
+  }
+  res.render('account/signup', {
+    title: 'Registro'
+  });
+};
+
+/**
+ * POST /registro
+ * Crear una nueva cuenta de usuario.
+ */
+exports.postSignup = (req, res, next) => {
+  const validationErrors = [];
+  if (!validator.isLength(req.body.password, { min: 6 })) {
+    validationErrors.push({ msg: 'La contraseña debe tener al menos 6 caracteres.' });
+  }
+  if (req.body.password !== req.body.confirmPassword) {
+    validationErrors.push({ msg: 'Las contraseñas no coinciden.' });
+  }
+
+  if (validationErrors.length) {
+    req.flash('errors', validationErrors);
+    return res.redirect('/registro');
+  }
+
+  const user = new User({
+    username: req.body.username,
+    password: req.body.password,
+    role: 'user'
+  });
+
+  User.findOne({ username: req.body.username }, (err, existingUser) => {
+    if (err) return next(err);
+    if (existingUser) {
+      req.flash('errors', { msg: 'Ya existe un usuario con ese nombre.' });
+      return res.redirect('/registro');
+    }
+    user.save((err) => {
+      if (err) return next(err);
+      req.login(user, (err) => {
+        if (err) return next(err);
+        req.flash('success', { msg: 'El usuario ha sido registrado exitosamente.' });
+        res.redirect('/');
+      });
+    });
+  });
 };

@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  .pb-2.mt-2.mb-4.border-bottom
+    h3 Registro
+  form(id='signup-form', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='username') Usuario
+      .col-md-7
+        input.form-control(type='text', name='username', id='username', placeholder='Usuario', autofocus, autocomplete='username', required)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='password') Contraseña
+      .col-md-7
+        input.form-control(type='password', name='password', id='password', placeholder='Contraseña', autocomplete='new-password', minlength='6', required)
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='confirmPassword') Confirmar Contraseña
+      .col-md-7
+        input.form-control(type='password', name='confirmPassword', id='confirmPassword', placeholder='Confirmar Contraseña', autocomplete='new-password', minlength='6', required)
+    .form-group.offset-sm-3.col-md-7.pl-2
+      button.btn.btn-success(type='submit')
+        i.fas.fa-user-plus.fa-sm
+        | Registrarse
