@@ -30,4 +30,4 @@ passport.deserializeUser((id, done) => {
        return done(null, false, { msg: 'El usuario o la contraseña son incorrectos.' });
      });
    });
- }));
+}));
