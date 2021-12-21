@@ -105,8 +105,9 @@ exports.postSignup = (req, res, next) => {
         req.login(user, (err) => {
           if (err) return next(err);
           req.flash('success', { msg: 'El usuario ha sido registrado exitosamente.' });
-          if (user.role === 'admin')
+          if (user.role === 'admin') {
             req.flash('success', { msg: 'Al ser el primer usuario registrado, se te han otorgado permisos de administrador.' });
+          }
           res.redirect('/');
         });
       });
