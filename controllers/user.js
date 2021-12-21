@@ -87,16 +87,28 @@ exports.postSignup = (req, res, next) => {
 
   User.findOne({ username: req.body.username }, (err, existingUser) => {
     if (err) return next(err);
+
     if (existingUser) {
       req.flash('errors', { msg: 'Ya existe un usuario con ese nombre.' });
       return res.redirect('/registro');
     }
-    user.save((err) => {
+
+    User.countDocuments({}, (err, count) => {
       if (err) return next(err);
-      req.login(user, (err) => {
+
+      // el primer usuario registrado es el administrador
+      if (count === 0)
+        user.role = 'admin';
+
+      user.save((err) => {
         if (err) return next(err);
-        req.flash('success', { msg: 'El usuario ha sido registrado exitosamente.' });
-        res.redirect('/');
+        req.login(user, (err) => {
+          if (err) return next(err);
+          req.flash('success', { msg: 'El usuario ha sido registrado exitosamente.' });
+          if (user.role === 'admin')
+            req.flash('success', { msg: 'Al ser el primer usuario registrado, se te han otorgado permisos de administrador.' });
+          res.redirect('/');
+        });
       });
     });
   });
