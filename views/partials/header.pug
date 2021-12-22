@@ -10,6 +10,10 @@
       ul.nav.navbar-nav
         li.nav-item(class=(title === 'Inicio') ? 'active' : undefined)
           a.nav-link(href='/') Inicio
+        if user
+          if user.role === 'admin'
+            li.nav-item(class=(title === 'Marcas') ? 'active' : undefined)
+              a.nav-link(href='/marcas') Marcas
       ul.nav.navbar-nav.ml-auto
         if !user
           li.nav-item(class=(title === 'Iniciar sesión') ? 'active' : undefined)

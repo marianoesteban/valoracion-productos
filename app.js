@@ -21,6 +21,7 @@ dotenv.config();
  */
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
+const marcaController = require('./controllers/marca');
 
 /**
  * Configuración de Passport.
@@ -78,6 +79,11 @@ app.post('/iniciar-sesion', userController.postLogin);
 app.get('/cerrar-sesion', userController.logout);
 app.get('/registro', userController.getSignup);
 app.post('/registro', userController.postSignup);
+
+/**
+ * Rutas para la administración de marcas.
+ */
+app.get('/marcas', passportConfig.isAuthenticated, passportConfig.isAdmin, marcaController.getMarcas);
 
 /**
  * Iniciar el servidor de Express.

@@ -31,3 +31,23 @@ passport.deserializeUser((id, done) => {
      });
    });
 }));
+
+/**
+ * Login Required middleware.
+ */
+exports.isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/iniciar-sesion');
+};
+
+/**
+ * Admin Only middleware.
+ */
+exports.isAdmin = (req, res, next) => {
+  if (req.user.role === 'admin') {
+    return next();
+  }
+  res.redirect('/');
+};
