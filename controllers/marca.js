@@ -31,7 +31,7 @@ exports.getAddMarca = (req, res) => {
  * POST /marcas/agregar
  * Crear una nueva marca.
  */
-exports.postAddMarca = async (req, res) => {
+exports.postAddMarca = async (req, res, next) => {
   if (validator.isEmpty(req.body.nombre, { ignore_whitespace: true })) {
     req.flash('errors', { msg: 'Debe especificar el nombre de la marca.' });
     return res.redirect('/marcas/agregar');
