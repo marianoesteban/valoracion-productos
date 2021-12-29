@@ -84,6 +84,8 @@ app.post('/registro', userController.postSignup);
  * Rutas para la administración de marcas.
  */
 app.get('/marcas', passportConfig.isAuthenticated, passportConfig.isAdmin, marcaController.getMarcas);
+app.get('/marcas/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, marcaController.getAddMarca);
+app.post('/marcas/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, marcaController.postAddMarca);
 
 /**
  * Iniciar el servidor de Express.
