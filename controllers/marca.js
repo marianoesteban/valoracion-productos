@@ -55,3 +55,43 @@ exports.postAddMarca = async (req, res, next) => {
     next(err);
   }
 };
+
+/**
+ * GET /marcas/editar/:idMarca
+ * Página para editar los datos de una marca.
+ */
+exports.getEditMarca = async (req, res, next) => {
+  try {
+    const marca = await Marca.findById(req.params.idMarca);
+    if (!marca) {
+      req.flash('errors', { msg: 'No se encuentra la marca.' });
+      return res.redirect('/marcas');
+    }
+
+    res.render('marca/edit', {
+      title: 'Editar marca',
+      marca
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * POST /marcas/editar/:idMarca
+ * Editar los datos de una marca.
+ */
+exports.postEditMarca = async (req, res, next) => {
+  if (validator.isEmpty(req.body.nombre, { ignore_whitespace: true })) {
+    req.flash('errors', { msg: 'Debe especificar el nombre de la marca.' });
+    return res.redirect('/marcas/agregar');
+  }
+
+  try {
+    await Marca.updateOne({ _id: req.params.idMarca }, { nombre: req.body.nombre });
+    req.flash('success', { msg: 'La marca ha sido editada exitosamente.' });
+    res.redirect('/marcas');
+  } catch (err) {
+    next(err);
+  }
+};

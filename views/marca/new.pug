@@ -3,14 +3,4 @@ extends ../layout
 block content
   .pb-2.mt-2.mb-4.border-bottom
     h3 Agregar marca
-  form(method='post')
-    input(type='hidden', name='_csrf', value=_csrf)
-    .form-group.row
-      label.col-md-3.col-form-label.font-weight-bold.text-right(for='nombre') Nombre
-      .col-md-7
-        input.form-control(type='text', name='nombre', id='nombre', placeholder='Introduzca el nombre de la marca', required)
-    .form-group
-      .offset-md-3.col-md-7.pl-2
-        button.btn.btn-success(type='submit')
-          i.fas.fa-plus.fa-sm
-          | Agregar marca
+  +marca-form('Agregar marca', ['fas', 'fa-plus'])

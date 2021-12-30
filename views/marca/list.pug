@@ -13,7 +13,12 @@ block content
     thead.thead-dark
       tr
         th Nombre
+        th Editar
     tbody
       each marca in marcas
         tr
-          td= marca.nombre
+          td.align-middle= marca.nombre
+          td
+            a.btn.btn-primary.btn-sm(href=`marcas/editar/${marca._id}`)
+              i.far.fa-edit.fa-sm
+              | Editar
