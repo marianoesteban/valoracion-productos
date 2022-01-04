@@ -84,7 +84,7 @@ exports.getEditMarca = async (req, res, next) => {
 exports.postEditMarca = async (req, res, next) => {
   if (validator.isEmpty(req.body.nombre, { ignore_whitespace: true })) {
     req.flash('errors', { msg: 'Debe especificar el nombre de la marca.' });
-    return res.redirect('/marcas/agregar');
+    return res.redirect('/marcas/editar/' + req.params.idMarca);
   }
 
   try {
