@@ -14,6 +14,7 @@ block content
       tr
         th Nombre
         th Editar
+        th Eliminar
     tbody
       each marca in marcas
         tr
@@ -22,3 +23,7 @@ block content
             a.btn.btn-primary.btn-sm(href=`marcas/editar/${marca._id}`)
               i.far.fa-edit.fa-sm
               | Editar
+          td
+            a.btn.btn-danger.btn-sm(href=`marcas/eliminar/${marca._id}`, onclick=`return confirm('¿Está seguro de que quiere eliminar la marca ${marca.nombre}?');`)
+              i.far.fa-trash-alt.fa-sm
+              | Eliminar

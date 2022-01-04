@@ -88,6 +88,7 @@ app.get('/marcas/agregar', passportConfig.isAuthenticated, passportConfig.isAdmi
 app.post('/marcas/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, marcaController.postAddMarca);
 app.get('/marcas/editar/:idMarca', passportConfig.isAuthenticated, passportConfig.isAdmin, marcaController.getEditMarca);
 app.post('/marcas/editar/:idMarca', passportConfig.isAuthenticated, passportConfig.isAdmin, marcaController.postEditMarca);
+app.get('/marcas/eliminar/:idMarca', passportConfig.isAuthenticated, passportConfig.isAdmin, marcaController.deleteMarca);
 
 /**
  * Iniciar el servidor de Express.

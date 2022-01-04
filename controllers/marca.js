@@ -95,3 +95,17 @@ exports.postEditMarca = async (req, res, next) => {
     next(err);
   }
 };
+
+/**
+ * GET /marcas/eliminar/:idMarca
+ * Elimina la marca especificada.
+ */
+exports.deleteMarca = async (req, res, next) => {
+  try {
+    await Marca.deleteOne({ _id: req.params.idMarca });
+    req.flash('success', { msg: 'La marca ha sido eliminada exitosamente.' });
+    res.redirect('/marcas');
+  } catch (err) {
+    next(err);
+  }
+};
