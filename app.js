@@ -99,6 +99,8 @@ app.post('/registro', userController.postSignup);
 app.get('/categorias', passportConfig.isAuthenticated, passportConfig.isAdmin, categoriaController.getCategorias);
 app.get('/categorias/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, categoriaController.getAddCategoria);
 app.post('/categorias/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, categoriaController.postAddCategoria);
+app.get('/categorias/editar/:idCategoria', passportConfig.isAuthenticated, passportConfig.isAdmin, categoriaController.getEditCategoria);
+app.post('/categorias/editar/:idCategoria', passportConfig.isAuthenticated, passportConfig.isAdmin, categoriaController.postEditCategoria);
 
 /**
  * Rutas para la administración de marcas.

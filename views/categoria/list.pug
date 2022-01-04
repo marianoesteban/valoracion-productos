@@ -13,7 +13,12 @@ block content
     thead.thead-dark
       tr
         th Nombre
+        th Editar
     tbody
       each categoria in categorias
         tr
-          td= categoria.nombre
+          td.align-middle= categoria.nombre
+          td
+            a.btn.btn-primary.btn-sm(href=`categorias/editar/${categoria._id}`)
+              i.far.fa-edit.fa-sm
+              | Editar

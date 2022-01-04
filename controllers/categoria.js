@@ -55,3 +55,43 @@ exports.postAddCategoria = async (req, res, next) => {
     next(err);
   }
 };
+
+/**
+ * GET /categorias/editar/:idCategoria
+ * Página para editar los datos de una categoría.
+ */
+exports.getEditCategoria = async (req, res, next) => {
+  try {
+    const categoria = await Categoria.findById(req.params.idCategoria);
+    if (!categoria) {
+      req.flash('errors', { msg: 'No se encuentra la categoría.' });
+      return res.redirect('/categorias');
+    }
+
+    res.render('categoria/edit', {
+      title: 'Editar categoría',
+      categoria
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * POST /categorias/editar/:idCategoria
+ * Editar los datos de una categoría.
+ */
+exports.postEditCategoria = async (req, res, next) => {
+  if (validator.isEmpty(req.body.nombre, { ignore_whitespace: true })) {
+    req.flash('errors', { msg: 'Debe especificar el nombre de la categoría.' });
+    return res.redirect('/categorias/editar/' + req.params.idCategoria);
+  }
+
+  try {
+    await Categoria.updateOne({ _id: req.params.idCategoria }, { nombre: req.body.nombre });
+    req.flash('success', { msg: 'La categoría ha sido editada exitosamente.' });
+    res.redirect('/categorias');
+  } catch (err) {
+    next(err);
+  }
+};
