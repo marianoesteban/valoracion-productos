@@ -22,6 +22,7 @@ dotenv.config();
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const marcaController = require('./controllers/marca');
+const categoriaController = require('./controllers/categoria');
 
 /**
  * Configuración de Passport.
@@ -91,6 +92,11 @@ app.post('/iniciar-sesion', userController.postLogin);
 app.get('/cerrar-sesion', userController.logout);
 app.get('/registro', userController.getSignup);
 app.post('/registro', userController.postSignup);
+
+/**
+ * Rutas para la administración de categorías.
+ */
+app.get('/categorias', passportConfig.isAuthenticated, passportConfig.isAdmin, categoriaController.getCategorias);
 
 /**
  * Rutas para la administración de marcas.

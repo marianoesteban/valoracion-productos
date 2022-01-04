@@ -12,6 +12,8 @@
           a.nav-link(href='/') Inicio
         if user
           if user.role === 'admin'
+            li.nav-item(class=(title === 'Categorías') ? 'active' : undefined)
+              a.nav-link(href='/categorias') Categorías
             li.nav-item(class=(title === 'Marcas') ? 'active' : undefined)
               a.nav-link(href='/marcas') Marcas
       ul.nav.navbar-nav.ml-auto
