@@ -97,6 +97,8 @@ app.post('/registro', userController.postSignup);
  * Rutas para la administración de categorías.
  */
 app.get('/categorias', passportConfig.isAuthenticated, passportConfig.isAdmin, categoriaController.getCategorias);
+app.get('/categorias/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, categoriaController.getAddCategoria);
+app.post('/categorias/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, categoriaController.postAddCategoria);
 
 /**
  * Rutas para la administración de marcas.
