@@ -68,6 +68,18 @@ app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 });
+app.use((req, res, next) => {
+  // Después de iniciar sesión, volver a la página que se quería visitar
+  if (
+    !req.user
+    && req.path !== '/iniciar-sesion'
+    && req.path !== '/registro'
+    && !req.path.match(/\./)
+  ) {
+    req.session.returnTo = req.originalUrl;
+  }
+  next();
+});
 app.use(express.static(path.join(__dirname, 'public')));
 
 /**

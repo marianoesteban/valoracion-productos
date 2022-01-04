@@ -34,7 +34,7 @@ exports.postLogin = (req, res, next) => {
     req.login(user, (err) => {
       if (err) return next(err);
       req.flash('success', { msg: 'La sesión ha sido iniciada exitosamente.' });
-      res.redirect('/');
+      res.redirect(req.session.returnTo || '/');
     });
   })(req, res, next);
 }
