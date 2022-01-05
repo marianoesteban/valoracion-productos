@@ -88,6 +88,13 @@ exports.postEditMarca = async (req, res, next) => {
   }
 
   try {
+    // verificar que no haya otra marca con ese nombre
+    const existingMarca = await Marca.findOne({ nombre: req.body.nombre });
+    if (existingMarca) {
+      req.flash('errors', { msg: 'Ya existe una marca con ese nombre.' });
+      return res.redirect('/marcas/editar/' + req.params.idMarca);
+    }
+
     await Marca.updateOne({ _id: req.params.idMarca }, { nombre: req.body.nombre });
     req.flash('success', { msg: 'La marca ha sido editada exitosamente.' });
     res.redirect('/marcas');
