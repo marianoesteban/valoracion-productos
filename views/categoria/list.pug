@@ -14,6 +14,7 @@ block content
       tr
         th Nombre
         th Editar
+        th Eliminar
     tbody
       each categoria in categorias
         tr
@@ -22,3 +23,7 @@ block content
             a.btn.btn-primary.btn-sm(href=`categorias/editar/${categoria._id}`)
               i.far.fa-edit.fa-sm
               | Editar
+          td
+            a.btn.btn-danger.btn-sm(href=`categorias/eliminar/${categoria._id}`, onclick=`return confirm('¿Está seguro de que quiere eliminar la categoría ${categoria.nombre}?');`)
+              i.far.fa-trash-alt.fa-sm
+              | Eliminar

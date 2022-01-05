@@ -101,6 +101,7 @@ app.get('/categorias/agregar', passportConfig.isAuthenticated, passportConfig.is
 app.post('/categorias/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, categoriaController.postAddCategoria);
 app.get('/categorias/editar/:idCategoria', passportConfig.isAuthenticated, passportConfig.isAdmin, categoriaController.getEditCategoria);
 app.post('/categorias/editar/:idCategoria', passportConfig.isAuthenticated, passportConfig.isAdmin, categoriaController.postEditCategoria);
+app.get('/categorias/eliminar/:idCategoria', passportConfig.isAuthenticated, passportConfig.isAdmin, categoriaController.deleteCategoria);
 
 /**
  * Rutas para la administración de marcas.

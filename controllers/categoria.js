@@ -95,3 +95,17 @@ exports.postEditCategoria = async (req, res, next) => {
     next(err);
   }
 };
+
+/**
+ * GET /categorias/eliminar/:idCategoria
+ * Elimina la categoría especificada.
+ */
+exports.deleteCategoria = async (req, res, next) => {
+  try {
+    await Categoria.deleteOne({ _id: req.params.idCategoria });
+    req.flash('success', { msg: 'La categoría ha sido eliminada exitosamente.' });
+    res.redirect('/categorias');
+  } catch (err) {
+    next(err);
+  }
+};
