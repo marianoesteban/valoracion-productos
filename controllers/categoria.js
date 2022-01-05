@@ -88,6 +88,13 @@ exports.postEditCategoria = async (req, res, next) => {
   }
 
   try {
+    // verificar que no haya otra categoría con ese nombre
+    const existingCategoria = await Categoria.findOne({ nombre: req.body.nombre });
+    if (existingCategoria && existingCategoria._id != req.params.idCategoria) {
+      req.flash('errors', { msg: 'Ya existe una categoría con ese nombre.' });
+      return res.redirect('/categorias/editar/' + req.params.idCategoria);
+    }
+
     await Categoria.updateOne({ _id: req.params.idCategoria }, { nombre: req.body.nombre });
     req.flash('success', { msg: 'La categoría ha sido editada exitosamente.' });
     res.redirect('/categorias');
