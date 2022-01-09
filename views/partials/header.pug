@@ -16,6 +16,8 @@
               a.nav-link(href='/categorias') Categorías
             li.nav-item(class=(title === 'Marcas') ? 'active' : undefined)
               a.nav-link(href='/marcas') Marcas
+            li.nav-item(class=(title === 'Productos') ? 'active' : undefined)
+              a.nav-link(href='/productos') Productos
       ul.nav.navbar-nav.ml-auto
         if !user
           li.nav-item(class=(title === 'Iniciar sesión') ? 'active' : undefined)

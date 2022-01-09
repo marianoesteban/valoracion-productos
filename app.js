@@ -23,6 +23,7 @@ const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const marcaController = require('./controllers/marca');
 const categoriaController = require('./controllers/categoria');
+const productoController = require('./controllers/producto');
 
 /**
  * Configuración de Passport.
@@ -112,6 +113,11 @@ app.post('/marcas/agregar', passportConfig.isAuthenticated, passportConfig.isAdm
 app.get('/marcas/editar/:idMarca', passportConfig.isAuthenticated, passportConfig.isAdmin, marcaController.getEditMarca);
 app.post('/marcas/editar/:idMarca', passportConfig.isAuthenticated, passportConfig.isAdmin, marcaController.postEditMarca);
 app.get('/marcas/eliminar/:idMarca', passportConfig.isAuthenticated, passportConfig.isAdmin, marcaController.deleteMarca);
+
+/**
+ * Rutas para la administración de productos.
+ */
+app.get('/productos', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.getProductos);
 
 /**
  * Iniciar el servidor de Express.
