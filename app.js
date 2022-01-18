@@ -118,6 +118,8 @@ app.get('/marcas/eliminar/:idMarca', passportConfig.isAuthenticated, passportCon
  * Rutas para la administración de productos.
  */
 app.get('/productos', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.getProductos);
+app.get('/productos/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.getAddProducto);
+app.post('/productos/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.postAddProducto);
 
 /**
  * Iniciar el servidor de Express.
