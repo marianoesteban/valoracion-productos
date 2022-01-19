@@ -21,8 +21,8 @@ dotenv.config();
  */
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
-const marcaController = require('./controllers/marca');
 const categoriaController = require('./controllers/categoria');
+const marcaController = require('./controllers/marca');
 const productoController = require('./controllers/producto');
 
 /**
