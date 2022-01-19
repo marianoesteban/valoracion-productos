@@ -16,6 +16,7 @@ block content
         th Marca
         th Modelo
         th Editar
+        th Eliminar
     tbody
       each producto in productos
         tr
@@ -26,3 +27,7 @@ block content
             a.btn.btn-primary.btn-sm(href=`productos/editar/${producto._id}`)
               i.far.fa-edit.fa-sm
               | Editar
+          td
+            a.btn.btn-danger.btn-sm(href=`productos/eliminar/${producto._id}`, onclick=`return confirm('¿Está seguro de que quiere eliminar el producto ${producto.categoria.nombre} ${producto.marca.nombre} ${producto.modelo}?');`)
+              i.far.fa-trash-alt.fa-sm
+              | Eliminar

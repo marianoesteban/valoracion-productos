@@ -118,3 +118,17 @@ exports.postEditProducto = async (req, res, next) => {
     next(err);
   }
 };
+
+/**
+ * GET /productos/eliminar/:idProducto
+ * Elimina el producto especificado.
+ */
+exports.deleteProducto = async (req, res, next) => {
+  try {
+    await Producto.deleteOne({ _id: req.params.idProducto });
+    req.flash('success', { msg: 'El producto ha sido eliminado exitosamente.' });
+    res.redirect('/productos');
+  } catch (err) {
+    next(err);
+  }
+};
