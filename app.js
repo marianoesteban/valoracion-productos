@@ -120,6 +120,8 @@ app.get('/marcas/eliminar/:idMarca', passportConfig.isAuthenticated, passportCon
 app.get('/productos', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.getProductos);
 app.get('/productos/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.getAddProducto);
 app.post('/productos/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.postAddProducto);
+app.get('/productos/editar/:idProducto', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.getEditProducto);
+app.post('/productos/editar/:idProducto', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.postEditProducto);
 
 /**
  * Iniciar el servidor de Express.

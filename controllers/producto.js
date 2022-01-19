@@ -69,3 +69,52 @@ exports.postAddProducto = async (req, res, next) => {
     next(err);
   }
 };
+
+/**
+ * GET /productos/editar/:idProducto
+ * Página para editar los datos de un producto.
+ */
+exports.getEditProducto = async (req, res, next) => {
+  try {
+    const producto = await Producto.findById(req.params.idProducto);
+    if (!producto) {
+      req.flash('errors', { msg: 'No se encuentra el producto.' });
+      return res.redirect('/productos');
+    }
+
+    const categorias = await Categoria.find({}).sort('nombre');
+    const marcas = await Marca.find({}).sort('nombre');
+
+    res.render('producto/edit', {
+      title: 'Editar producto',
+      producto,
+      categorias,
+      marcas
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/**
+ * POST /productos/editar/:idProducto
+ * Editar los datos de un producto.
+ */
+exports.postEditProducto = async (req, res, next) => {
+  if (validator.isEmpty(req.body.modelo, { ignore_whitespace: true })) {
+    req.flash('errors', { msg: 'Debe especificar el modelo del producto.' });
+    return res.redirect('/productos/editar/' + req.params.idProducto);
+  }
+
+  try {
+    await Producto.updateOne({ _id: req.params.idProducto }, {
+      categoria: req.body.categoria,
+      marca: req.body.marca,
+      modelo: req.body.modelo
+    });
+    req.flash('success', { msg: 'El producto ha sido editado exitosamente.' });
+    res.redirect('/productos');
+  } catch (err) {
+    next(err);
+  }
+};

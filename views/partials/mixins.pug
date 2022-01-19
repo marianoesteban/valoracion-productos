@@ -24,7 +24,7 @@ mixin categoria-form(submitButtonText, iconClasses, nombre='')
           i.fa-sm(class=iconClasses)
           | #{submitButtonText}
 
-mixin producto-form(submitButtonText, iconClasses, categorias, marcas, modelo='')
+mixin producto-form(submitButtonText, iconClasses, categorias, marcas, idCategoria='', idMarca='', modelo='')
   form(method='post')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group.row
@@ -32,13 +32,13 @@ mixin producto-form(submitButtonText, iconClasses, categorias, marcas, modelo=''
       .col-md-7
         select.form-control(name='categoria', id='categoria', required)
           each categoria in categorias
-            option(value=`${categoria._id}`)= categoria.nombre
+            option(value=`${categoria._id}`, selected=(categoria._id.toString() === idCategoria))= categoria.nombre
     .form-group.row
       label.col-md-3.col-form-label.font-weight-bold.text-right(for='marca') Marca
       .col-md-7
         select.form-control(name='marca', id='marca', required)
           each marca in marcas
-            option(value=`${marca._id}`)= marca.nombre
+            option(value=`${marca._id}`, selected=(marca._id.toString() === idMarca))= marca.nombre
     .form-group.row
       label.col-md-3.col-form-label.font-weight-bold.text-right(for='modelo') Modelo
       .col-md-7

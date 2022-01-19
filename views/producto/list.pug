@@ -15,9 +15,14 @@ block content
         th Categoría
         th Marca
         th Modelo
+        th Editar
     tbody
       each producto in productos
         tr
-          td= producto.categoria.nombre
-          td= producto.marca.nombre
-          td= producto.modelo
+          td.align-middle= producto.categoria.nombre
+          td.align-middle= producto.marca.nombre
+          td.align-middle= producto.modelo
+          td
+            a.btn.btn-primary.btn-sm(href=`productos/editar/${producto._id}`)
+              i.far.fa-edit.fa-sm
+              | Editar
