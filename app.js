@@ -10,6 +10,9 @@ const flash = require('express-flash');
 const path = require('path');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const multer = require('multer');
+
+const upload = multer({ dest: path.join(__dirname, 'public', 'images') });
 
 /**
  * Cargar las variables de entorno del archivo .env.
@@ -63,7 +66,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(lusca.csrf());
+app.use((req, res, next) => {
+  if (req.path === '/productos/agregar' || req.path.startsWith('/productos/editar')) {
+    // Multer multipart/form-data handling needs to occur before the Lusca CSRF check.
+    next();
+  } else {
+    lusca.csrf()(req, res, next);
+  }
+});
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
 app.use((req, res, next) => {
@@ -118,10 +128,10 @@ app.get('/marcas/eliminar/:idMarca', passportConfig.isAuthenticated, passportCon
  * Rutas para la administración de productos.
  */
 app.get('/productos', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.getProductos);
-app.get('/productos/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.getAddProducto);
-app.post('/productos/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.postAddProducto);
-app.get('/productos/editar/:idProducto', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.getEditProducto);
-app.post('/productos/editar/:idProducto', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.postEditProducto);
+app.get('/productos/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, lusca({ csrf: true }), productoController.getAddProducto);
+app.post('/productos/agregar', passportConfig.isAuthenticated, passportConfig.isAdmin, upload.single('imagen'), productoController.postAddProducto);
+app.get('/productos/editar/:idProducto', passportConfig.isAuthenticated, passportConfig.isAdmin, lusca({ csrf: true }), productoController.getEditProducto);
+app.post('/productos/editar/:idProducto', passportConfig.isAuthenticated, passportConfig.isAdmin, upload.single('imagen'), productoController.postEditProducto);
 app.get('/productos/eliminar/:idProducto', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.deleteProducto);
 
 /**

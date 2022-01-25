@@ -24,9 +24,15 @@ mixin categoria-form(submitButtonText, iconClasses, nombre='')
           i.fa-sm(class=iconClasses)
           | #{submitButtonText}
 
-mixin producto-form(submitButtonText, iconClasses, categorias, marcas, idCategoria='', idMarca='', modelo='')
-  form(method='post')
+mixin producto-form(submitButtonText, iconClasses, categorias, marcas, imageSrc='https://plchldr.co/i/200x200?&bg=eeeee4&fc=000000&text=Imagen%20no%20disponible', idCategoria='', idMarca='', modelo='')
+  form(method='post', enctype='multipart/form-data')
     input(type='hidden', name='_csrf', value=_csrf)
+    .form-group.row
+      img#imagen-producto.col-md-3.offset-md-3(src=imageSrc, alt='imagen del producto', width='200px', height='200px')
+    .form-group.row
+      label.col-md-3.col-form-label.font-weight-bold.text-right(for='imagen') Imagen
+      .col-md-7
+        input.form-control-file(type='file', name='imagen', id='imagen', accept='image/png, image/jpeg, image/webp', onchange='document.getElementById("imagen-producto").src = window.URL.createObjectURL(this.files[0])')
     .form-group.row
       label.col-md-3.col-form-label.font-weight-bold.text-right(for='categoria') Categoría
       .col-md-7

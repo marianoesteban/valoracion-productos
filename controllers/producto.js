@@ -56,9 +56,10 @@ exports.postAddProducto = async (req, res, next) => {
   }
 
   const producto = new Producto({
+    imagen: req.file?.filename,
     categoria: req.body.categoria,
     marca: req.body.marca,
-    modelo: req.body.modelo
+    modelo: req.body.modelo,
   });
 
   try {
@@ -108,6 +109,7 @@ exports.postEditProducto = async (req, res, next) => {
 
   try {
     await Producto.updateOne({ _id: req.params.idProducto }, {
+      imagen: req.file?.filename,
       categoria: req.body.categoria,
       marca: req.body.marca,
       modelo: req.body.modelo

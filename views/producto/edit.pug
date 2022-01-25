@@ -3,4 +3,4 @@ extends ../layout
 block content
   .pb-2.mt-2.mb-4.border-bottom
     h3 Editar producto
-  +producto-form('Editar producto', ['far', 'fa-edit'], categorias, marcas, producto.categoria.toString(), producto.marca.toString(), producto.modelo)
+  +producto-form('Editar producto', ['far', 'fa-edit'], categorias, marcas, producto.imagen && `/images/${producto.imagen}`, producto.categoria.toString(), producto.marca.toString(), producto.modelo)
