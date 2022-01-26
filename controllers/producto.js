@@ -1,3 +1,5 @@
+const fsPromises = require('fs').promises;
+const path = require('path');
 const validator = require('validator');
 const Categoria = require('../models/Categoria');
 const Marca = require('../models/Marca');
@@ -108,6 +110,14 @@ exports.postEditProducto = async (req, res, next) => {
   }
 
   try {
+    // si se cambia la imagen, borrar la anterior
+    if (req.file) {
+      const producto = await Producto.findById(req.params.idProducto);
+      if (producto.imagen) {
+        await fsPromises.rm(path.join(__dirname, '../public', 'images', producto.imagen));
+      }
+    }
+
     await Producto.updateOne({ _id: req.params.idProducto }, {
       imagen: req.file?.filename,
       categoria: req.body.categoria,
