@@ -137,6 +137,12 @@ exports.postEditProducto = async (req, res, next) => {
  */
 exports.deleteProducto = async (req, res, next) => {
   try {
+    // borrar la imagen
+    const producto = await Producto.findById(req.params.idProducto);
+    if (producto.imagen) {
+      await fsPromises.rm(path.join(__dirname, '../public', 'images', producto.imagen));
+    }
+
     await Producto.deleteOne({ _id: req.params.idProducto });
     req.flash('success', { msg: 'El producto ha sido eliminado exitosamente.' });
     res.redirect('/productos');
