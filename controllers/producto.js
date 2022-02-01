@@ -6,6 +6,16 @@ const Marca = require('../models/Marca');
 const Producto = require('../models/Producto');
 
 /**
+ * Borra la imagen de un producto.
+ */
+const borrarImagen = async (idProducto) => {
+  const producto = await Producto.findById(idProducto);
+  if (producto.imagen) {
+    await fsPromises.rm(path.join(__dirname, '../public', 'images', producto.imagen));
+  }
+};
+
+/**
  * GET /productos
  * Página de administración de productos.
  */
@@ -111,12 +121,7 @@ exports.postEditProducto = async (req, res, next) => {
 
   try {
     // si se cambia la imagen, borrar la anterior
-    if (req.file) {
-      const producto = await Producto.findById(req.params.idProducto);
-      if (producto.imagen) {
-        await fsPromises.rm(path.join(__dirname, '../public', 'images', producto.imagen));
-      }
-    }
+    if (req.file) borrarImagen(req.params.idProducto);
 
     await Producto.updateOne({ _id: req.params.idProducto }, {
       imagen: req.file?.filename,
@@ -138,10 +143,7 @@ exports.postEditProducto = async (req, res, next) => {
 exports.deleteProducto = async (req, res, next) => {
   try {
     // borrar la imagen
-    const producto = await Producto.findById(req.params.idProducto);
-    if (producto.imagen) {
-      await fsPromises.rm(path.join(__dirname, '../public', 'images', producto.imagen));
-    }
+    borrarImagen(req.params.idProducto);
 
     await Producto.deleteOne({ _id: req.params.idProducto });
     req.flash('success', { msg: 'El producto ha sido eliminado exitosamente.' });
