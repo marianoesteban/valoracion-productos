@@ -10,7 +10,7 @@ const Producto = require('../models/Producto');
  */
 const borrarImagen = async (idProducto) => {
   const producto = await Producto.findById(idProducto);
-  if (producto.imagen) {
+  if (producto?.imagen) {
     await fsPromises.rm(path.join(__dirname, '../public', 'images', producto.imagen));
   }
 };
