@@ -121,7 +121,7 @@ exports.postEditProducto = async (req, res, next) => {
 
   try {
     // si se cambia la imagen, borrar la anterior
-    if (req.file) borrarImagen(req.params.idProducto);
+    if (req.file) await borrarImagen(req.params.idProducto);
 
     await Producto.updateOne({ _id: req.params.idProducto }, {
       imagen: req.file?.filename,
@@ -143,7 +143,7 @@ exports.postEditProducto = async (req, res, next) => {
 exports.deleteProducto = async (req, res, next) => {
   try {
     // borrar la imagen
-    borrarImagen(req.params.idProducto);
+    await borrarImagen(req.params.idProducto);
 
     await Producto.deleteOne({ _id: req.params.idProducto });
     req.flash('success', { msg: 'El producto ha sido eliminado exitosamente.' });
