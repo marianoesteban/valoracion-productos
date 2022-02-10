@@ -87,6 +87,7 @@ app.use((req, res, next) => {
     && req.path !== '/iniciar-sesion'
     && req.path !== '/registro'
     && !req.path.match(/\./)
+    && !req.path.startsWith('/images/')
   ) {
     req.session.returnTo = req.originalUrl;
   }

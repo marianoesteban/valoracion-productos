@@ -4,3 +4,11 @@ block content
   h1 Valoración de productos
   p.lead Califique productos y dé su opinión sobre los mismos.
   hr
+
+  .row
+    each producto in productos
+      .col-sm-12.col-md-6.col-lg-4.mb-3
+        .card.h-100
+          img.card-img-top(src=producto.imagen ? `images/${producto.imagen}` : 'https://plchldr.co/i/200x200?&bg=eeeee4&fc=000000&text=Imagen%20no%20disponible', alt='imagen del producto', height='300px')
+          .card-body
+            h5.card-title #{producto.categoria.nombre} #{producto.marca.nombre} #{producto.modelo}
