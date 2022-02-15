@@ -27,6 +27,7 @@ const userController = require('./controllers/user');
 const categoriaController = require('./controllers/categoria');
 const marcaController = require('./controllers/marca');
 const productoController = require('./controllers/producto');
+const valoracionController = require('./controllers/valoracion');
 
 /**
  * Configuración de Passport.
@@ -134,6 +135,11 @@ app.post('/productos/agregar', passportConfig.isAuthenticated, passportConfig.is
 app.get('/productos/editar/:idProducto', passportConfig.isAuthenticated, passportConfig.isAdmin, lusca({ csrf: true }), productoController.getEditProducto);
 app.post('/productos/editar/:idProducto', passportConfig.isAuthenticated, passportConfig.isAdmin, upload.single('imagen'), productoController.postEditProducto);
 app.get('/productos/eliminar/:idProducto', passportConfig.isAuthenticated, passportConfig.isAdmin, productoController.deleteProducto);
+
+/**
+ * Rutas para la valoración de productos.
+ */
+app.get('/valoraciones/:idProducto', valoracionController.getValoraciones);
 
 /**
  * Iniciar el servidor de Express.

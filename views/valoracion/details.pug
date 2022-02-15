@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+  .pb-2.mt-2.mb-4.border-bottom
+    h3 #{producto.categoria.nombre} #{producto.marca.nombre} #{producto.modelo}
+  
+  .card.d-flex.border-0
+    .row
+      .col-sm-12.col-md-4.text-center
+        img.img-fluid(src=producto.imagen ? `../images/${producto.imagen}` : 'https://plchldr.co/i/300x300?&bg=eeeee4&fc=000000&text=Imagen%20no%20disponible', alt='imagen del producto')
