@@ -10,7 +10,7 @@ block content
         img.img-fluid(src=producto.imagen ? `../images/${producto.imagen}` : 'https://plchldr.co/i/300x300?&bg=eeeee4&fc=000000&text=Imagen%20no%20disponible', alt='imagen del producto')
       .col-sm-12.col-md-8
         .card-body
-          if producto.valoraciones.some(valoracion => valoracion.user.toString() == user._id.toString())
+          if user && producto.valoraciones.some(valoracion => valoracion.user.toString() == user._id.toString())
             p.card-text Ya ha calificado este producto.
           else
             form(method='post')
