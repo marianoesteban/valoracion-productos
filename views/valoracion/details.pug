@@ -8,3 +8,23 @@ block content
     .row
       .col-sm-12.col-md-4.text-center
         img.img-fluid(src=producto.imagen ? `../images/${producto.imagen}` : 'https://plchldr.co/i/300x300?&bg=eeeee4&fc=000000&text=Imagen%20no%20disponible', alt='imagen del producto')
+      .col-sm-12.col-md-8
+        .card-body
+          if producto.valoraciones.some(valoracion => valoracion.user.toString() == user._id.toString())
+            p.card-text Ya ha calificado este producto.
+          else
+            form(method='post')
+              input(type='hidden', name='_csrf', value=_csrf)
+              .form-group.row
+                label.col-md-3.col-form-label.font-weight-bold.text-right(for='calificacion') Calificación (1 a 10)
+                .col-md-9
+                  input.form-control.form-control-lg.text-center(type='number', name='calificacion', id='calificacion', min='1', max='10', value='5', required)
+              .form-group.row
+                label.col-md-3.col-form-label.font-weight-bold.text-right(for='opinion') Opinión (opcional)
+                .col-md-9
+                  textarea.form-control(name='opinion', id='opinion', rows='5')
+              .form-group
+                .offset-md-3.col-md-9.pl-2
+                  button.btn.btn-success(type='submit')
+                    i.fas.fa-poll-h.fa-sm
+                    | Valorar

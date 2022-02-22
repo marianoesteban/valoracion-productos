@@ -140,6 +140,7 @@ app.get('/productos/eliminar/:idProducto', passportConfig.isAuthenticated, passp
  * Rutas para la valoración de productos.
  */
 app.get('/valoraciones/:idProducto', valoracionController.getValoraciones);
+app.post('/valoraciones/:idProducto', passportConfig.isAuthenticated, valoracionController.postValoracion);
 
 /**
  * Iniciar el servidor de Express.
