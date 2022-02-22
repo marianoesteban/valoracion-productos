@@ -12,4 +12,9 @@ block content
           img.card-img-top(src=producto.imagen ? `images/${producto.imagen}` : 'https://plchldr.co/i/200x200?&bg=eeeee4&fc=000000&text=Imagen%20no%20disponible', alt='imagen del producto', height='300px')
           .card-body.d-flex.flex-column
             h5.card-title #{producto.categoria.nombre} #{producto.marca.nombre} #{producto.modelo}
-            a.btn.btn-primary.stretched-link.mt-auto(href=`valoraciones/${producto._id}`) Ver valoraciones
+            .d-flex.flex-column.mt-auto
+              if producto.numCalificaciones > 0
+                p.card-text.text-center Puntaje: #{(producto.sumaCalificaciones / producto.numCalificaciones).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              else
+                p.card-text.text-center Sin calificaciones
+              a.btn.btn-primary.stretched-link(href=`valoraciones/${producto._id}`) Ver valoraciones
