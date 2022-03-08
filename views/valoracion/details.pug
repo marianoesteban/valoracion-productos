@@ -4,7 +4,7 @@ block content
   .pb-2.mt-2.mb-4.border-bottom
     h3 #{producto.categoria.nombre} #{producto.marca.nombre} #{producto.modelo}
   
-  .card.d-flex.border-0
+  .card.d-flex.border-0.mb-3
     .row
       .col-sm-12.col-md-4.text-center
         img.img-fluid(src=producto.imagen ? `../images/${producto.imagen}` : 'https://plchldr.co/i/300x300?&bg=eeeee4&fc=000000&text=Imagen%20no%20disponible', alt='imagen del producto')
@@ -30,3 +30,20 @@ block content
                   button.btn.btn-success(type='submit')
                     i.fas.fa-poll-h.fa-sm
                     | Valorar
+
+  .border.border-primary.rounded-lg.p-3
+    h4.mb-4 Valoraciones
+    if producto.valoraciones.length > 0
+      .row
+        each valoracion in producto.valoraciones.reverse()
+          .col-12
+            .card.mb-3
+              .card-body
+                h5.card-title Calificación: #{valoracion.calificacion}
+                h6.card-subtitle.mb-2.text-muted= new Intl.DateTimeFormat('es-AR', { dateStyle: 'medium', timeStyle: 'short' }).format(valoracion.fechaCreacion)
+                if valoracion.opinion
+                  p.card-text= valoracion.opinion
+                else
+                  p.card-text #[i Sin comentarios]
+    else
+      p #[i No hay ninguna valoración aún.]
