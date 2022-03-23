@@ -6,16 +6,6 @@ const Marca = require('../models/Marca');
 const Producto = require('../models/Producto');
 
 /**
- * Borra la imagen de un producto.
- */
-const borrarImagen = async (idProducto) => {
-  const producto = await Producto.findById(idProducto);
-  if (producto?.imagen) {
-    await fsPromises.rm(path.join(__dirname, '../public', 'images', producto.imagen));
-  }
-};
-
-/**
  * GET /productos
  * Página de administración de productos.
  */
@@ -67,14 +57,22 @@ exports.postAddProducto = async (req, res, next) => {
     return res.redirect('/productos/agregar');
   }
 
-  const producto = new Producto({
-    imagen: req.file?.filename,
-    categoria: req.body.categoria,
-    marca: req.body.marca,
-    modelo: req.body.modelo,
-  });
-
   try {
+    let imagen = undefined;
+    if (req.file) {
+      imagen = {
+        data: await fsPromises.readFile(req.file.path),
+        mediaType: req.file.mimetype
+      };
+    }
+
+    const producto = new Producto({
+      imagen,
+      categoria: req.body.categoria,
+      marca: req.body.marca,
+      modelo: req.body.modelo,
+    });
+
     await producto.save();
     req.flash('success', { msg: 'El producto ha sido agregado exitosamente.' });
     res.redirect('/productos');
@@ -120,11 +118,16 @@ exports.postEditProducto = async (req, res, next) => {
   }
 
   try {
-    // si se cambia la imagen, borrar la anterior
-    if (req.file) await borrarImagen(req.params.idProducto);
+    let imagen = undefined;
+    if (req.file) {
+      imagen = {
+        data: await fsPromises.readFile(req.file.path),
+        mediaType: req.file.mimetype
+      };
+    }
 
     await Producto.updateOne({ _id: req.params.idProducto }, {
-      imagen: req.file?.filename,
+      imagen,
       categoria: req.body.categoria,
       marca: req.body.marca,
       modelo: req.body.modelo
@@ -142,9 +145,6 @@ exports.postEditProducto = async (req, res, next) => {
  */
 exports.deleteProducto = async (req, res, next) => {
   try {
-    // borrar la imagen
-    await borrarImagen(req.params.idProducto);
-
     await Producto.deleteOne({ _id: req.params.idProducto });
     req.flash('success', { msg: 'El producto ha sido eliminado exitosamente.' });
     res.redirect('/productos');

@@ -12,7 +12,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const multer = require('multer');
 
-const upload = multer({ dest: path.join(__dirname, 'public', 'images') });
+const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 /**
  * Cargar las variables de entorno del archivo .env.

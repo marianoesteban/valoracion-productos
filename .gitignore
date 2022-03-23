@@ -114,5 +114,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# Imágenes de los productos
-public/images/
+# Imágenes subidas
+uploads/

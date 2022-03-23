@@ -9,7 +9,7 @@ block content
     each producto in productos
       .col-sm-12.col-md-6.col-lg-4.mb-3
         .card.h-100
-          img.card-img-top(src=producto.imagen ? `images/${producto.imagen}` : 'https://plchldr.co/i/200x200?&bg=eeeee4&fc=000000&text=Imagen%20no%20disponible', alt='imagen del producto', height='300px')
+          img.card-img-top(src=producto.imagen.data ? `data:${producto.imagen.mediaType};base64,${producto.imagen.data.toString('base64')}` : 'https://plchldr.co/i/200x200?&bg=eeeee4&fc=000000&text=Imagen%20no%20disponible', alt='imagen del producto', height='300px')
           .card-body.d-flex.flex-column
             h5.card-title #{producto.categoria.nombre} #{producto.marca.nombre} #{producto.modelo}
             .d-flex.flex-column.mt-auto
