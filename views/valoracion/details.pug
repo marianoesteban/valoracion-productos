@@ -40,7 +40,7 @@ block content
             .card.mb-3
               .card-body
                 h5.card-title Calificación: #{valoracion.calificacion}
-                h6.card-subtitle.mb-2.text-muted= new Intl.DateTimeFormat('es-AR', { dateStyle: 'medium', timeStyle: 'short' }).format(valoracion.fechaCreacion)
+                h6.card-subtitle.mb-2.text-muted= new Intl.DateTimeFormat('es-AR', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'America/Argentina/Buenos_Aires' }).format(valoracion.fechaCreacion)
                 if valoracion.opinion
                   p.card-text= valoracion.opinion
                 else
